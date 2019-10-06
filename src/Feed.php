@@ -182,6 +182,7 @@ class Feed
 			if (self::$cacheDir) {
 				file_put_contents($cacheFile, $data);
 			}
+            file_put_contents("debug.xml", $data);
 		} elseif (self::$cacheDir && $data = @file_get_contents($cacheFile)) {
 			// ok
 		} else {

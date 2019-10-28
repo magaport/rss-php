@@ -189,7 +189,9 @@ class Feed
 			throw new FeedException('Cannot load feed.');
 		}
 
-		return new SimpleXMLElement($data, LIBXML_NOWARNING | LIBXML_NOERROR);
+        $fixed = preg_replace('/[\x1f]/u', '', $data);
+
+		return new SimpleXMLElement($fixed, LIBXML_NOWARNING | LIBXML_NOERROR);
 	}
 
 
@@ -228,7 +230,7 @@ class Feed
                 $options = array(
                     'http'=>array(
                         'method' => 'GET',
-                        'header' => 'Authorization: Basic ' . base64_encode($user.":".$pass) . "\r\n"
+                        'header' => 'Authorization: Basic ' . base64_encode($user.":".$pass) . "\r\n",
                     )
                 );
                 $context = stream_context_create($options);

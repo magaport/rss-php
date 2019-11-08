@@ -182,15 +182,15 @@ class Feed
 			if (self::$cacheDir) {
 				file_put_contents($cacheFile, $data);
 			}
-            file_put_contents("debug.xml", $data);
+            file_put_contents("feed-debug.xml", $data);
 		} elseif (self::$cacheDir && $data = @file_get_contents($cacheFile)) {
 			// ok
 		} else {
 			throw new FeedException('Cannot load feed.');
 		}
 
-        $fixed = preg_replace('/[\x1f]/u', '', $data);
-
+        $fixed = preg_replace('/[\x1e-\x1f]/u', '', $data);
+        
 		return new SimpleXMLElement($fixed, LIBXML_NOWARNING | LIBXML_NOERROR);
 	}
 
